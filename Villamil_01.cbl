@@ -20,6 +20,8 @@
 
        PROCEDURE DIVISION.
 
+         PERFORM MENU UNTIL CHOICE = 6.
+
          MENU.
 
 		     DISPLAY "MENU".
@@ -33,7 +35,7 @@
              ACCEPT CHOICE.
 
              IF CHOICE = 1 THEN
-               DISPLAY "B"
+               DISPLAY "PREPARING TO ADD STUDENT...."
              ELSE
                IF CHOICE = 2 THEN
                  DISPLAY "E"
@@ -49,6 +51,7 @@
                      ELSE
                        IF CHOICE = 6 THEN
                          DISPLAY "ES"
+                         STOP RUN
                        ELSE
                          DISPLAY "Invalid choice, try again"
                        END-IF
