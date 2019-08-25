@@ -41,12 +41,14 @@
              ELSE
                IF CHOICE = 2 THEN
                  DISPLAY "E"
+                 PERFORM EDITSTDINFO
                ELSE
                  IF CHOICE = 3 THEN
                    DISPLAY "A"
                  ELSE
                    IF CHOICE = 4 THEN
                      DISPLAY "C"
+                     MOVE 1 TO IT
                      PERFORM VIEWSTUDENT
                    ELSE
                      IF CHOICE = 5 THEN
@@ -77,7 +79,8 @@
           END-IF.
          
          FINDSTD.
-          IF STDsearch IS NOT EQUAL TO sNo(IT) THEN
+          DISPLAY IT
+          IF STDsearch IS NOT EQUAL TO sNo(IT) AND IT < 6 THEN
             COMPUTE IT = IT + 1
           END-IF.
 
@@ -106,26 +109,63 @@
              DISPLAY "The student directory is full"
            END-IF.
 
+         EDITSTDINFO.
+           IF NUMstd = 0 THEN
+             DISPLAY "There are no students to view in the directory"
+           ELSE
+             DISPLAY "Enter his/her student number: " WITH NO ADVANCING
+             ACCEPT STDsearch
+             PERFORM FINDSTD UNTIL STDsearch IS EQUAL TO sNo(IT)
+      -      OR IT > 5  
+             IF IT > 5 
+               DISPLAY "Student with student number " WITH NO ADVANCING
+               DISPLAY STDsearch
+               DISPLAY " was not found" 
+             ELSE
+               IF Deleted(IT) = 0 THEN
+                 DISPLAY "enter new student course: " WITH NO ADVANCING
+                 ACCEPT course(IT)
+                 DISPLAY "enter new student mobile no. : " 
+      -  WITH NO ADVANCING
+                 ACCEPT mobile(IT)
+                 DISPLAY "enter new student landline no. : " 
+      -  WITH NO ADVANCING
+                 ACCEPT landline(IT)
+                 DISPLAY "enter new student age: " WITH NO ADVANCING
+                 ACCEPT age(IT)
+               MOVE 1 TO IT 
+          
+           END-IF.
+
          VIEWSTUDENT.
            IF NUMstd > 0 THEN
              DISPLAY "Enter his/her student number: " WITH NO ADVANCING
              ACCEPT STDsearch
              PERFORM FINDSTD UNTIL STDsearch IS EQUAL TO sNo(IT)
-             DISPLAY "student number: " WITH NO ADVANCING
-             DISPLAY sNo(IT)
-             DISPLAY "student full name: " WITH NO ADVANCING
-             DISPLAY fullname(IT)
-             DISPLAY "student course: " WITH NO ADVANCING
-             DISPLAY course(IT)
-             DISPLAY "student mobile no. : " WITH NO ADVANCING
-             DISPLAY mobile(IT)
-             DISPLAY "student landline no. : " WITH NO ADVANCING
-             DISPLAY landline(IT)
-             DISPLAY "student age: " WITH NO ADVANCING
-             DISPLAY age(IT)
-             MOVE 1 TO IT
+      -      OR IT > 5
+             IF IT > 5 
+               DISPLAY "Student with student number " WITH NO ADVANCING
+               DISPLAY STDsearch
+               DISPLAY " was not found" 
+             ELSE
+               IF Deleted(IT) = 0 THEN
+                 DISPLAY "student number: " WITH NO ADVANCING
+                 DISPLAY sNo(IT)
+                 DISPLAY "student full name: " WITH NO ADVANCING
+                 DISPLAY fullname(IT)
+                 DISPLAY "student course: " WITH NO ADVANCING
+                 DISPLAY course(IT)
+                 DISPLAY "student mobile no. : " WITH NO ADVANCING
+                 DISPLAY mobile(IT)
+                 DISPLAY "student landline no. : " WITH NO ADVANCING
+                 DISPLAY landline(IT)
+                 DISPLAY "student age: " WITH NO ADVANCING
+                 DISPLAY age(IT)
+               MOVE 1 TO IT
            ELSE
              DISPLAY "There are no students to view in the directory"
+               END-IF
+             END-IF
            END-IF.
 
         VIEWALLSTD.
@@ -142,6 +182,7 @@
             DISPLAY landline(IT)
             DISPLAY "student age: " WITH NO ADVANCING
             DISPLAY age(IT)
+            DISPLAY "------------------------------------------------"
           ELSE 
             DISPLAY "Student slot " WITH NO ADVANCING
             DISPLAY IT WITH NO ADVANCING
