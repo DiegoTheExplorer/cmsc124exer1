@@ -40,25 +40,26 @@
                PERFORM ADDSTUDENT
              ELSE
                IF CHOICE = 2 THEN
-                 DISPLAY "E"
                  PERFORM EDITSTDINFO
                ELSE
                  IF CHOICE = 3 THEN
-                   DISPLAY "A"
+                   PERFORM DELETESTD
                  ELSE
                    IF CHOICE = 4 THEN
-                     DISPLAY "C"
                      MOVE 1 TO IT
                      PERFORM VIEWSTUDENT
                    ELSE
                      IF CHOICE = 5 THEN
-                       DISPLAY "H"
-                       MOVE 1 TO IT
-                       PERFORM VIEWALLSTD UNTIL IT > 5
-                       MOVE 1 TO IT
+                       IF NUMstd > 0 
+                         MOVE 1 TO IT
+                         PERFORM VIEWALLSTD UNTIL IT > 5
+                         MOVE 1 TO IT
+                       ELSE 
+                         DISPLAY 
+      -      "There are no students to view in the directory"
                      ELSE
                        IF CHOICE = 6 THEN
-                         DISPLAY "ES"
+                         DISPLAY "BYEEE HAVE A GREAT TIIIIIIIME!"
                          STOP RUN
                        ELSE
                          DISPLAY "Invalid choice, try again"
@@ -137,7 +138,38 @@
           
            END-IF.
 
+         DELETESTD.
+           IF NUMstd = 0 THEN 
+            DISPLAY "There are no students to view in the directory"
+           ELSE
+           IF NUMstd > 0 THEN
+             DISPLAY "Enter his/her student number: " WITH NO ADVANCING
+             ACCEPT STDsearch
+             PERFORM FINDSTD UNTIL STDsearch IS EQUAL TO sNo(IT)
+      -      OR IT > 5
+             IF IT > 5 
+               DISPLAY "Student with student number " WITH NO ADVANCING
+               DISPLAY STDsearch
+               DISPLAY " was not found" 
+             ELSE
+               IF Deleted(IT) = 0 THEN
+                 MOVE 1 TO Deleted(IT)
+                 DISPLAY "Student with student number " 
+      -  WITH NO ADVANCING
+                 DISPLAY STDsearch
+                 DISPLAY " has been deleted"
+                 COMPUTE NUMstd = NUMstd - 1 
+               MOVE 1 TO IT
+           ELSE
+             DISPLAY "There are no students to view in the directory"
+               END-IF
+             END-IF
+           END-IF.
+
          VIEWSTUDENT.
+           IF NUMstd = 0 THEN 
+            DISPLAY "There are no students to view in the directory"
+           ELSE
            IF NUMstd > 0 THEN
              DISPLAY "Enter his/her student number: " WITH NO ADVANCING
              ACCEPT STDsearch
@@ -162,32 +194,34 @@
                  DISPLAY "student age: " WITH NO ADVANCING
                  DISPLAY age(IT)
                MOVE 1 TO IT
-           ELSE
-             DISPLAY "There are no students to view in the directory"
+                 END-IF
                END-IF
              END-IF
            END-IF.
 
         VIEWALLSTD.
-          IF Deleted(IT) IS EQUAL TO 0
-            DISPLAY "student number: " WITH NO ADVANCING
-            DISPLAY sNo(IT)
-            DISPLAY "student full name: " WITH NO ADVANCING
-            DISPLAY fullname(IT)
-            DISPLAY "student course: " WITH NO ADVANCING
-            DISPLAY course(IT)
-            DISPLAY "student mobile no. : " WITH NO ADVANCING
-            DISPLAY mobile(IT)
-            DISPLAY "student landline no. : " WITH NO ADVANCING
-            DISPLAY landline(IT)
-            DISPLAY "student age: " WITH NO ADVANCING
-            DISPLAY age(IT)
-            DISPLAY "------------------------------------------------"
-          ELSE 
-            DISPLAY "Student slot " WITH NO ADVANCING
-            DISPLAY IT WITH NO ADVANCING
-            DISPLAY " is empty"
-          END-IF.
-          COMPUTE IT = IT + 1.
+           IF Deleted(IT) IS EQUAL TO 0
+             DISPLAY "------------------------------------------------"
+             DISPLAY "student number: " WITH NO ADVANCING
+             DISPLAY sNo(IT)
+             DISPLAY "student full name: " WITH NO ADVANCING
+             DISPLAY fullname(IT)
+             DISPLAY "student course: " WITH NO ADVANCING
+             DISPLAY course(IT)
+             DISPLAY "student mobile no. : " WITH NO ADVANCING
+             DISPLAY mobile(IT)
+             DISPLAY "student landline no. : " WITH NO ADVANCING
+             DISPLAY landline(IT)
+             DISPLAY "student age: " WITH NO ADVANCING
+             DISPLAY age(IT)
+             DISPLAY "------------------------------------------------"
+           ELSE 
+             DISPLAY "------------------------------------------------"
+             DISPLAY "Student slot " WITH NO ADVANCING
+             DISPLAY IT WITH NO ADVANCING
+             DISPLAY " is empty"
+             DISPLAY "------------------------------------------------"
+           END-IF.
+           COMPUTE IT = IT + 1.
 
        END PROGRAM.
