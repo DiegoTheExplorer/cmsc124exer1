@@ -104,7 +104,7 @@
          VIEWSTUDENT.
            IF NUMstd > 0 THEN
              DISPLAY "Enter his/her student number: " WITH NO ADVANCING
-             DISPLAY STDsearch
+             ACCEPT STDsearch
              PERFORM FINDSTD UNTIL STDsearch IS EQUAL TO sNo(IT)
              DISPLAY "student number: " WITH NO ADVANCING
              DISPLAY sNo(IT)
