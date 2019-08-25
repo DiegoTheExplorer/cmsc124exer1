@@ -72,8 +72,22 @@
 
          ADDSTUDENT.
            IF NUMstd < 5 THEN
+             PERFORM CHOOSESTD
              DISPLAY "Enter student number: " WITH NO ADVANCING
+             ACCEPT sNo(IT)
+             DISPLAY "Enter student full name: " WITH NO ADVANCING
+             ACCEPT fullname(IT)
+             DISPLAY "Enter student course: " WITH NO ADVANCING
+             ACCEPT course(IT)
+             DISPLAY "Enter student mobile no. : " WITH NO ADVANCING
+             ACCEPT mobile(IT)
+             DISPLAY "Enter student landline no. : " WITH NO ADVANCING
+             ACCEPT landline(IT)
+             DISPLAY "Enter student age: " WITH NO ADVANCING
+             ACCEPT age(IT)
            ELSE
              DISPLAY "The student directory is full"
            END-IF.
+         VIEWSTUDENT.
+           
         END PROGRAM.
