@@ -5,7 +5,7 @@
          WORKING-STORAGE SECTION.
            01 students.
              02 student-info OCCURS 5 TIMES.
-               03 isEmpty PIC 9 VALUE 1.
+               03 Deleted PIC 9 VALUE 1.
                03 fullname PIC X(30).
                03 sNo PIC X(30).
                03 course PIC X(20).
@@ -17,13 +17,13 @@
            77 IT PIC 99.
            77 CHOICE PIC 9.
            77 NUMstd PIC 9 VALUE 0.
+           77 STDchoice PIC 9 VALUE 0.
 
        PROCEDURE DIVISION.
 
          PERFORM MENU UNTIL CHOICE = 6.
 
          MENU.
-
 		     DISPLAY "MENU".
 			   DISPLAY "[1] ADD STUDENT".
 			   DISPLAY "[2] EDIT STUDENT INFO".
@@ -61,19 +61,19 @@
                END-IF
              END-IF.
 
-
-
-         ISFULL.
-           IF isEmpty(IT) = 0 THEN
-             ADD 1 TO NUMstd GIVING NUMstd
-           END-IF.
+         CHOOSESTD.
+          IF Deleted(IT) = 0 THEN
+            COMPUTE IT = IT + 1
+          ELSE
+            DISPLAY "Student slot " WITH NO ADVANCING
+            DISPLAY IT WITH NO ADVANCING
+            DISPLAY "is occupied"
+          END-IF.
 
          ADDSTUDENT.
-           DISPLAY "Enter studnet number: " WITH NO ADVANCING.
-         
-
-
-
-
-
-
+           IF NUMstd < 5 THEN
+             DISPLAY "Enter student number: " WITH NO ADVANCING
+           ELSE
+             DISPLAY "The student directory is full"
+           END-IF.
+        END PROGRAM.
