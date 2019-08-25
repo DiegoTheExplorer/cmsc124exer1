@@ -51,6 +51,9 @@
                    ELSE
                      IF CHOICE = 5 THEN
                        DISPLAY "H"
+                       MOVE 1 TO IT
+                       PERFORM VIEWALLSTD UNTIL IT > 5
+                       MOVE 1 TO IT
                      ELSE
                        IF CHOICE = 6 THEN
                          DISPLAY "ES"
@@ -81,7 +84,7 @@
          ADDSTUDENT.
            IF NUMstd < 5 THEN
              MOVE 1 TO IT
-             PERFORM CHOOSESTD
+             PERFORM CHOOSESTD UNTIL Deleted(IT) = 1
              DISPLAY IT
              DISPLAY "Enter student number: " WITH NO ADVANCING
              ACCEPT sNo(IT)
@@ -95,6 +98,8 @@
              ACCEPT landline(IT)
              DISPLAY "Enter student age: " WITH NO ADVANCING
              ACCEPT age(IT)
+             MOVE 0 TO Deleted(IT)
+             DISPLAY Deleted(IT)
              COMPUTE NUMstd = NUMstd + 1
              MOVE 1 TO IT
            ELSE
@@ -122,4 +127,26 @@
            ELSE
              DISPLAY "There are no students to view in the directory"
            END-IF.
-        END PROGRAM.
+
+        VIEWALLSTD.
+          IF Deleted(IT) IS EQUAL TO 0
+            DISPLAY "student number: " WITH NO ADVANCING
+            DISPLAY sNo(IT)
+            DISPLAY "student full name: " WITH NO ADVANCING
+            DISPLAY fullname(IT)
+            DISPLAY "student course: " WITH NO ADVANCING
+            DISPLAY course(IT)
+            DISPLAY "student mobile no. : " WITH NO ADVANCING
+            DISPLAY mobile(IT)
+            DISPLAY "student landline no. : " WITH NO ADVANCING
+            DISPLAY landline(IT)
+            DISPLAY "student age: " WITH NO ADVANCING
+            DISPLAY age(IT)
+          ELSE 
+            DISPLAY "Student slot " WITH NO ADVANCING
+            DISPLAY IT WITH NO ADVANCING
+            DISPLAY " is empty"
+          END-IF.
+          COMPUTE IT = IT + 1.
+
+       END PROGRAM.
